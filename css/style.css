@@ -1,0 +1,642 @@
+/* ==========================================================================
+   個人財金筆記網站 - 極簡專注閱讀風樣式表
+   遵循 AGENTS.md 視覺風格規範
+   ========================================================================== */
+
+:root {
+  /* 色彩計畫 */
+  --bg-main: #FBFBF9;
+  --bg-sidebar: #F5F4F0;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #FAF9F5;
+  --bg-card-active: #F0EFEA;
+  
+  --text-main: #24292F;
+  --text-secondary: #57606A;
+  --text-muted: #8C959F;
+  
+  --primary-accent: #1B4D3E;      /* 深墨綠 */
+  --primary-accent-light: #E8F2ED;
+  --primary-border: #C8DFD4;
+
+  --alert-accent: #A34834;        /* 沉穩磚紅（警示） */
+  --alert-bg: #FCF4F2;
+  --alert-border: #F0D5CF;
+  
+  --border-subtle: #E5E5E3;
+  --border-divider: #ECEBE8;
+
+  /* 字體與排版 */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Hiragino Sans GB", "Microsoft JhengHei", sans-serif;
+  --max-content-width: 760px;
+  --sidebar-width: 350px;
+  --line-height-prose: 1.8;
+  
+  --shadow-subtle: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* 基礎重置 */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: var(--line-height-prose);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   版面佈局（單頁式架構）
+   ========================================================================== */
+
+.app-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 行動端頂部導覽列 */
+.mobile-header {
+  display: none;
+  background-color: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 18px;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+
+.mobile-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary-accent);
+}
+
+.menu-toggle-btn {
+  background: transparent;
+  border: 1px solid var(--border-subtle);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+/* 側邊欄（目錄、搜尋與分類） */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  height: 100vh;
+  background-color: var(--bg-sidebar);
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  z-index: 90;
+  transition: transform 0.25s ease-in-out;
+}
+
+.sidebar-header {
+  padding: 24px 20px 16px 20px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.site-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--primary-accent);
+  letter-spacing: -0.2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.site-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  letter-spacing: 0.2px;
+}
+
+/* 搜尋區塊 */
+.search-box {
+  padding: 14px 20px 8px 20px;
+}
+
+.search-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  color: var(--text-muted);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 9px 12px 9px 34px;
+  font-size: 13px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-main);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.search-input:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 0 2px var(--primary-accent-light);
+}
+
+/* 分類標籤篩選列 */
+.category-filters {
+  padding: 8px 20px 12px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.filter-pill {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
+}
+
+.filter-pill.active {
+  background-color: var(--primary-accent);
+  border-color: var(--primary-accent);
+  color: #FFFFFF;
+}
+
+/* 筆記清單區 */
+.notes-list-header {
+  padding: 10px 20px 6px 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.notes-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 6px 12px 24px 12px;
+  list-style: none;
+}
+
+.note-item {
+  padding: 12px 14px;
+  margin-bottom: 6px;
+  border-radius: 6px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.note-item:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-subtle);
+}
+
+.note-item.active {
+  background-color: var(--bg-card);
+  border-color: var(--primary-border);
+  box-shadow: var(--shadow-subtle);
+}
+
+.note-item.active .note-item-title {
+  color: var(--primary-accent);
+}
+
+.note-item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.note-item-category {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--primary-accent);
+  background-color: var(--primary-accent-light);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.note-item-date {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.note-item-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.note-item-snippet {
+  font-size: 11.5px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   右側主閱讀區（Main Reader Pane）
+   ========================================================================== */
+
+.main-content {
+  flex: 1;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: var(--bg-main);
+  padding: 40px 48px 80px 48px;
+  display: flex;
+  justify-content: center;
+}
+
+.reader-container {
+  width: 100%;
+  max-width: var(--max-content-width);
+}
+
+/* 筆記標頭 */
+.note-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.note-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.meta-category {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary-accent);
+  background-color: var(--primary-accent-light);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.meta-tag {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.meta-date {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.note-title {
+  font-size: 30px;
+  font-weight: 750;
+  color: var(--text-main);
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+}
+
+/* 筆記內文區塊 */
+.section-block {
+  margin-bottom: 36px;
+}
+
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--primary-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-label::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 14px;
+  background-color: var(--primary-accent);
+  border-radius: 2px;
+}
+
+.prose-text {
+  font-size: 16px;
+  color: var(--text-main);
+  line-height: 1.85;
+}
+
+/* 清單項目樣式 */
+.styled-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.styled-list-item {
+  position: relative;
+  padding-left: 24px;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--text-main);
+}
+
+.styled-list-item::before {
+  content: "•";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  color: var(--primary-accent);
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.risk-list-item::before {
+  color: var(--alert-accent);
+}
+
+/* ==========================================================================
+   重點知識純 HTML 圖解元件樣式（零額外元素，紙質感）
+   ========================================================================== */
+
+.diagram-wrapper {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 22px 24px;
+  margin: 16px 0;
+  box-shadow: var(--shadow-subtle);
+}
+
+.diagram-header {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary-accent);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+/* 橫向流程流向 */
+.diagram-flow,
+.diagram-steps {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.flow-card,
+.step-card {
+  flex: 1;
+  min-width: 150px;
+  background-color: #FBFBFA;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.card-tag,
+.step-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.card-main,
+.step-desc {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.45;
+}
+
+.card-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+.flow-arrow,
+.step-arrow {
+  color: var(--primary-accent);
+  font-size: 18px;
+  font-weight: bold;
+  user-select: none;
+}
+
+/* 重點強調卡片 */
+.alert-card {
+  background-color: var(--primary-accent-light);
+  border-color: var(--primary-border);
+}
+
+.alert-tag {
+  color: var(--primary-accent);
+}
+
+.alert-main {
+  color: var(--primary-accent);
+}
+
+/* 雙欄對比模組 */
+.diagram-comparison {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+}
+
+.comp-col {
+  flex: 1;
+  background-color: #FBFBFA;
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 14px 16px;
+}
+
+.comp-focus {
+  background-color: var(--primary-accent-light);
+  border-color: var(--primary-border);
+}
+
+.comp-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.focus-title {
+  color: var(--primary-accent);
+  border-bottom-color: var(--primary-border);
+}
+
+.comp-item {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.comp-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.comp-vs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--text-muted);
+  padding: 0 4px;
+  user-select: none;
+}
+
+/* 頁腳 */
+.reader-footer {
+  margin-top: 60px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-divider);
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 空狀態 */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+/* ==========================================================================
+   響應式設計（RWD）
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  body {
+    flex-direction: column;
+  }
+
+  .mobile-header {
+    display: flex;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 53px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 53px);
+    transform: translateX(-100%);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    padding: 75px 20px 40px 20px;
+  }
+
+  .note-title {
+    font-size: 24px;
+  }
+
+  .diagram-flow,
+  .diagram-steps {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .flow-arrow,
+  .step-arrow {
+    text-align: center;
+    transform: rotate(90deg);
+    margin: 4px 0;
+  }
+
+  .diagram-comparison {
+    flex-direction: column;
+  }
+
+  .comp-vs {
+    margin: 4px 0;
+  }
+}

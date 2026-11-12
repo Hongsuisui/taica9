@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>個人財金筆記 - 概念速查知識庫</title>
+  <meta name="description" content="極簡專注閱讀風的個人財金筆記網站，採一個主題一篇之概念速查架構。">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- 行動端導覽頂欄 -->
+  <header class="mobile-header">
+    <div class="mobile-title">個人財金筆記</div>
+    <button class="menu-toggle-btn" id="menuToggleBtn" aria-label="切換選單">☰ 目錄</button>
+  </header>
+
+  <div class="app-container">
+    <!-- 側邊欄（目錄、搜尋、標籤） -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h1 class="site-title">
+          <span>個人財金筆記</span>
+        </h1>
+        <div class="site-desc">概念速查與核心知識庫 • 一個主題一篇</div>
+      </div>
+
+      <!-- 即時關鍵字搜尋 -->
+      <div class="search-box">
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="searchInput" 
+            class="search-input" 
+            placeholder="搜尋標題、標籤或關鍵字..." 
+            autocomplete="off"
+            aria-label="搜尋筆記"
+          >
+        </div>
+      </div>
+
+      <!-- 主題分類篩選標籤 -->
+      <nav class="category-filters" id="categoryFilters" aria-label="主題分類篩選">
+        <!-- 由 js/app.js 動態注入分類標籤 -->
+      </nav>
+
+      <!-- 筆記清單狀態 -->
+      <div class="notes-list-header">
+        <span>筆記列表</span>
+        <span id="notesCount">0 / 0</span>
+      </div>
+
+      <!-- 筆記目錄清單 -->
+      <ul class="notes-list" id="notesList" role="list">
+        <!-- 由 js/app.js 動態注入筆記項目 -->
+      </ul>
+    </aside>
+
+    <!-- 右側主閱讀區 -->
+    <main class="main-content" id="mainContent">
+      <article class="reader-container" id="noteContentContainer">
+        <!-- 由 js/app.js 動態渲染當前筆記內文 -->
+      </article>
+    </main>
+  </div>
+
+  <!-- 引用資料與邏輯腳本（純原生，無依賴，相對路徑） -->
+  <script src="js/notes-data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
